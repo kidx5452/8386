@@ -14,7 +14,10 @@ class ArticleController extends ControllerBase
         $this->activeModule(__DIR__);
     }
     public function indexAction(){
-
+        echo "<pre>";
+        $list = Article::find();
+        print_r($list->toArray());
+        die;
     }
 
 

@@ -10,6 +10,16 @@ return array(
     ),
     // More Config
     "active_sidebar"=>array(
-        array("name"=>$lang['name'])
+        array(
+            "name"=>$lang['name'],"link"=>"","icon"=>"","key"=>"",
+            "child"=>array("name"=>$lang['name'],"link"=>"","icon"=>"","key"=>"")
+        ),
+        array(
+            "name"=>$lang['test'],"link"=>"","icon"=>"","key"=>"",
+            "child"=>array(
+                array("name"=>$lang['name'],"link"=>"","icon"=>"","key"=>""),
+                array("name"=>$lang['name'],"link"=>"","icon"=>"","key"=>""),
+            )
+        )
     )
 );

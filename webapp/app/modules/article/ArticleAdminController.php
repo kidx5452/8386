@@ -14,6 +14,6 @@ class ArticleAdminController extends ControllerBase
         $this->activeModule(__DIR__,"admin");
     }
     public function indexAction(){
-
+        print_r($this->moduleInformation['lang']);
     }
 }

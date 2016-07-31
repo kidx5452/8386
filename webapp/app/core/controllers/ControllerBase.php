@@ -16,7 +16,7 @@ class ControllerBase extends \Phalcon\Mvc\Controller
     }
 
     /***
-     * Hàm này dùng để switch view giữa client và admin
+     * Hàm này dùng để switch view giữa client và admin + init Language + ...
      * @param $moduleDir
      * @param null $suffix_view
      */

@@ -9,7 +9,7 @@
 class ControllerBase extends \Phalcon\Mvc\Controller
 {
     public $moduleInformation; // Thông tin module khi người dùng truy cập
-    private $layoutFile; // Default layout file
+    public $layoutFile; // Default layout file
     public function initialize()
     {
         $this->layoutFile = "index";
@@ -41,8 +41,13 @@ class ControllerBase extends \Phalcon\Mvc\Controller
             $suffix_view = "views_".$suffix_view;
             $this->layoutFile = "admin";
         }
-        $this->view->setMainView("layout/{$this->layoutFile}");
+        $this->switchLayout();
         $this->view->pick("$moduleName/$suffix_view/$actionName");
+    }
+
+    protected function switchLayout($layout=null){
+        if($layout==null) $this->view->setMainView("layout/{$this->layoutFile}");
+        else $this->view->setMainView("layout/$layout");
     }
 
     /**

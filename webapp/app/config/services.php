@@ -11,6 +11,14 @@
     use Phalcon\Session\Adapter\Files as SessionAdapter;
     use Phalcon\Flash\Direct as Flash;
 
+    global $config;
+    /**
+     * Read common configuration
+     */
+    //$config = $di->has('config') ? $di->getShared('config') : null;
+    /**
+     * Try to load local configuration
+     */
     /**
      * The FactoryDefault Dependency Injector automatically register the right services providing a full stack framework
      */
@@ -24,6 +32,22 @@
 
         return $url;
     });
+
+    if (file_exists(__DIR__ . '/config/config.php')) {
+        //$override = new Config(include __DIR__ . '/config/config.php');;
+        $override = include __DIR__ . '/config/config.php';
+
+        if ($config instanceof Config) {
+            $config->merge($override);
+        } else {
+            $config = $override;
+        }
+    }
+
+    $di->set('config', function () use ($config) {
+        return $config;
+    }, true);
+
     /**
      * Setting up the view component
      */

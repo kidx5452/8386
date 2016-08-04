@@ -6,7 +6,7 @@
             'host' => 'localhost',
             'username' => 'root',
             'password' => '123456$',
-            'dbname' => 'thanglonga_demo',
+            'dbname' => 'hivietnam',
             'charset' => 'utf8',
         ],
         'application' => [

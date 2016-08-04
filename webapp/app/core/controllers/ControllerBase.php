@@ -32,6 +32,7 @@ class ControllerBase extends \Phalcon\Mvc\Controller
         // Get module information by path
         $moduleName = basename($moduleDir);
         $this->moduleInformation = require "$moduleDir/$moduleName.php"; // include file infor of modules
+        $this->debug($this->moduleInformation);
         $this->moduleInformation['lang'] = $lang; // Set lang for variable use in controller
         $this->view->label = $lang; // Set lang to view volt file
 
@@ -89,6 +90,15 @@ class ControllerBase extends \Phalcon\Mvc\Controller
     protected function setCulture($culture)
     {
         $this->session->set("culture",$culture);
+    }
+
+    public function debug(...$vars) {
+        foreach ($vars as $var) {
+            echo "<pre>";
+            print_r($var);
+            echo "</pre>";
+        }
+        die;
     }
 
 

@@ -15,6 +15,8 @@ class ArticleAdminController extends ControllerBase
         $this->activeModule(__DIR__,"admin");
     }
     public function indexAction(){
+        $list = Article::find();
+        $this->debug($list->toArray());
         // You can change layout in action level
         //$this->layoutFile = "somefile";
         //$this->switchLayout();

@@ -18,8 +18,8 @@
             'baseUri' => '/',
         ],
         'modules' => [
+            "auth",
             "index",
-            "article",
-            "page"
+            "article"
         ]
     ]);

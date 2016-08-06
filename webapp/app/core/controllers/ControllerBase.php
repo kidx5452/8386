@@ -32,16 +32,11 @@ class ControllerBase extends \Phalcon\Mvc\Controller
         // Get module information by path
         $moduleName = basename($moduleDir);
         $this->moduleInformation = require "$moduleDir/$moduleName.php"; // include file infor of modules
-        $this->debug($this->moduleInformation);
         $this->moduleInformation['lang'] = $lang; // Set lang for variable use in controller
         $this->view->label = $lang; // Set lang to view volt file
 
         // Switch view - layout admin or client
         $actionName = $this->dispatcher->getActionName();
-        if($suffix_view!="views") {
-            $suffix_view = "views_".$suffix_view;
-            $this->layoutFile = "admin";
-        }
         $this->switchLayout();
         $this->view->pick("$moduleName/$suffix_view/$actionName");
     }
@@ -51,6 +46,29 @@ class ControllerBase extends \Phalcon\Mvc\Controller
         else $this->view->setMainView("layout/$layout");
     }
 
+    // Sidebar Supporter
+    protected function initSidebar($activeKey=""){
+        global $activeSidebar;
+        $this->view->sidebar = $this->recursiveSidebar($activeSidebar,0,$activeKey);
+    }
+    private function recursiveSidebar($sidebars,$firstTag,$activeKey){
+        $strClassFirst = $firstTag==0?'id="main-menu" class="gui-controls"':'';
+        $htmlx = "<ul {$strClassFirst}>";
+        foreach($sidebars as $sidebar)
+        {
+            $htmlx .= '<li class="'.(count($sidebar['child'])>0?"gui-folder":"").'">';
+            $htmlx .= '<a href="'.(strlen($sidebar['link'])>0?$sidebar['link']:"javascript:void(0)").'" class="'.($activeKey==$sidebar['key']?"active":"").'">';
+            if(strlen($sidebar['icon'])>0 && $firstTag==0) $htmlx .= '<div class="gui-icon"><i class="'.$sidebar['icon'].'"></i></div>';
+            $htmlx .= '<span class="title">'.$sidebar["name"].'</span>';
+            $htmlx .= '</a>';
+            if(count($sidebar['child'])>0) $htmlx .= $this->recursiveSidebar($sidebar['child'],1,$activeKey);
+            $htmlx .= '</li>';
+        }
+        $htmlx .= "</ul>";
+        return $htmlx;
+    }
+
+    // Permission
     /**
      * @return boolean
      */
